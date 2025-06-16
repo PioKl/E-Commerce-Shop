@@ -14,14 +14,16 @@ import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/shared/delete-dialog";
+import { requireAdmin } from "@/lib/auth-guard";
 
 export const metadata: Metadata = {
-  title: "Amidn Orders",
+  title: "Admin Orders",
 };
 
 const AdminOrdersPage = async (props: {
   searchParams: Promise<{ page: string }>;
 }) => {
+  await requireAdmin();
   const { page = "1" } = await props.searchParams;
   const session = await auth();
   if (session?.user?.role !== "admin")
