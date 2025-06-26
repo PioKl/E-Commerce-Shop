@@ -38,11 +38,50 @@ export async function getAllProducts({
   limit = PAGE_SIZE,
   page,
   category,
+  price,
+  rating,
+  sort,
 }: {
   query: string;
   limit?: number;
   page: number;
   category?: string;
+  price?: string;
+  rating?: string;
+  sort?: string;
+}) {
+  const data = await prisma.product.findMany({
+    orderBy: { createdAt: "desc" },
+
+    skip: (page - 1) * limit,
+
+    take: limit,
+  });
+
+  const dataCount = await prisma.product.count();
+
+  return {
+    data,
+
+    totalPages: Math.ceil(dataCount / limit),
+  };
+}
+/* export async function getAllProducts({
+  query,
+  limit = PAGE_SIZE,
+  page,
+  category,
+  price,
+  rating,
+  sort,
+}: {
+  query: string;
+  limit?: number;
+  page: number;
+  category?: string;
+  price?: string;
+  rating?: string;
+  sort?: string;
 }) {
   const data = await prisma.product.findMany({
     where: {
@@ -71,7 +110,7 @@ export async function getAllProducts({
     data,
     totalPages: Math.ceil(dataCount / limit),
   };
-}
+} */
 
 //Delete a product
 export async function deleteProduct(id: string) {
