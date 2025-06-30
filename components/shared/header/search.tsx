@@ -5,9 +5,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
 } from "@/components/ui/select";
 import { getAllCategories } from "@/lib/actions/product.actions";
-import { SelectContent } from "@radix-ui/react-select";
 import { SearchIcon } from "lucide-react";
 
 const Search = async () => {
